@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef79aca4d21bdf4f80bbb66d32d9f76, type: 3}
   m_Name: Clubs7
   m_EditorClassIdentifier: 
-  cardName: 
-  cardValue: 0
-  cardImage: {fileID: 0}
+  cardName: 7
+  cardValue: 7
+  cardImage: {fileID: 705600524, guid: 0bcb19d93a016e94f93a7e2fac280bed, type: 3}
   suit: 2

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef79aca4d21bdf4f80bbb66d32d9f76, type: 3}
   m_Name: Diamonds3
   m_EditorClassIdentifier: 
-  cardName: 
-  cardValue: 0
-  cardImage: {fileID: 0}
+  cardName: 3
+  cardValue: 3
+  cardImage: {fileID: -118594338, guid: c223be1206095424885b1e1f058c1cf0, type: 3}
   suit: 1
