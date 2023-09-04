@@ -7,13 +7,85 @@ public class GameManager : MonoBehaviour
     public CardDatabase cardDatabase;
     public Deck deck;
     public GameObject cardPrefab;
-    public Transform spawnPoint;
+    public GameObject playerprefabs;
+    public List<GameObject> cardSlot = new List<GameObject>();
     public Canvas canvas;
+    
+    //player size
+    public int tableSize;
+    public GameObject[] playerPos;
 
     void Start()
     {
         deck.InitializeDeck(cardDatabase);
-        DrawCard();
+        spawnPlayer();
+        //GetAllChildObjects(playerprefabs.transform);
+        //DrawCard();
+    }
+
+    void spawnPlayer()
+    {
+        if (tableSize == 1)
+        {
+            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
+        }
+        if (tableSize == 2)
+        {
+            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer2 = Instantiate(playerprefabs, playerPos[1].transform.position, Quaternion.identity, canvas.transform);
+        }
+        if (tableSize == 3)
+        {
+            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer2 = Instantiate(playerprefabs, playerPos[1].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer3 = Instantiate(playerprefabs, playerPos[2].transform.position, Quaternion.identity, canvas.transform);
+        }
+        if (tableSize == 4)
+        {
+            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer2 = Instantiate(playerprefabs, playerPos[1].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer3 = Instantiate(playerprefabs, playerPos[2].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer4 = Instantiate(playerprefabs, playerPos[3].transform.position, Quaternion.identity, canvas.transform);
+            
+        }
+        if (tableSize == 5)
+        {
+            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer2 = Instantiate(playerprefabs, playerPos[1].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer3 = Instantiate(playerprefabs, playerPos[2].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer4 = Instantiate(playerprefabs, playerPos[3].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer5 = Instantiate(playerprefabs, playerPos[4].transform.position, Quaternion.identity, canvas.transform);
+            
+        }
+        if (tableSize == 6)
+        {
+            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer2 = Instantiate(playerprefabs, playerPos[1].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer3 = Instantiate(playerprefabs, playerPos[2].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer4 = Instantiate(playerprefabs, playerPos[3].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer5 = Instantiate(playerprefabs, playerPos[4].transform.position, Quaternion.identity, canvas.transform);
+            GameObject newplayer6 = Instantiate(playerprefabs, playerPos[5].transform.position, Quaternion.identity, canvas.transform);
+            
+        }
+        
+    }
+
+    void GetAllChildObjects(Transform parent)
+    {
+        // Iterate through each child of the parent transform.
+        foreach (Transform child in parent)
+        {
+            // Add the child GameObject to the list.
+            cardSlot.Add(child.gameObject);
+            
+            // Recursively call the function for this child to check its children.
+            GetAllChildObjects(child);
+        }
+    }
+
+    public void decideIndex()
+    {
+        
     }
 
     public void DrawCard()
@@ -36,16 +108,22 @@ public class GameManager : MonoBehaviour
 
     void SpawnCard(Card card)
     {
-        GameObject newCard = Instantiate(cardPrefab, spawnPoint.position, Quaternion.identity, canvas.transform);
-        CardDisplay cardDisplay = newCard.GetComponent<CardDisplay>();
+        int i;
+        for (i = 0; i < 3; i++)
+        {
+            GameObject newCard = Instantiate(cardPrefab, cardSlot[i].transform.position, Quaternion.identity, canvas.transform);
+            CardDisplay cardDisplay = newCard.GetComponent<CardDisplay>();
 
-        if (cardDisplay != null)
-        {
-            cardDisplay.SetCard(card);
+            if (cardDisplay != null)
+            {
+                cardDisplay.SetCard(card);
+            }
+            else
+            {
+                Debug.LogWarning("CardDisplay component not found on the cardPrefab.");
+            }
         }
-        else
-        {
-            Debug.LogWarning("CardDisplay component not found on the cardPrefab.");
-        }
+        
+        
     }
 }
