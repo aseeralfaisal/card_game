@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 
     public void decideIndex()
     {
-        
+        //GetAllChildObjects();
     }
 
     public void DrawCard()
