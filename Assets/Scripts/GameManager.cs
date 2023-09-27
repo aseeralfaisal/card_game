@@ -25,49 +25,43 @@ public class GameManager : MonoBehaviour
 
     void spawnPlayer()
     {
-        if (tableSize == 1)
+        // Instantiate player GameObjects based on tableSize
+        GameObject[] players = new GameObject[tableSize];
+        for (int i = 0; i < tableSize; i++)
         {
-            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
+            players[i] = Instantiate(playerprefabs, playerPos[i].transform.position, Quaternion.identity,
+                canvas.transform);
         }
-        if (tableSize == 2)
+
+        // Deal 3 cards to each player's hand
+        for (int i = 0; i < 3; i++)
         {
-            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer2 = Instantiate(playerprefabs, playerPos[1].transform.position, Quaternion.identity, canvas.transform);
+            foreach (GameObject player in players)
+            {
+                // Draw a card from the deck
+                Card drawnCard = deck.DrawCard();
+
+                if (drawnCard != null)
+                {
+                    // Get the player's script (you should have a Player script on your playerprefabs)
+                    Player playerScript = player.GetComponent<Player>();
+
+                    if (playerScript != null)
+                    {
+                        // Add the drawn card to the player's hand
+                        playerScript.AddCardToHand(drawnCard);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Player script not found on the playerprefabs.");
+                    }
+                }
+                else
+                {
+                    Debug.Log("No more cards in the deck.");
+                }
+            }
         }
-        if (tableSize == 3)
-        {
-            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer2 = Instantiate(playerprefabs, playerPos[1].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer3 = Instantiate(playerprefabs, playerPos[2].transform.position, Quaternion.identity, canvas.transform);
-        }
-        if (tableSize == 4)
-        {
-            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer2 = Instantiate(playerprefabs, playerPos[1].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer3 = Instantiate(playerprefabs, playerPos[2].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer4 = Instantiate(playerprefabs, playerPos[3].transform.position, Quaternion.identity, canvas.transform);
-            
-        }
-        if (tableSize == 5)
-        {
-            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer2 = Instantiate(playerprefabs, playerPos[1].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer3 = Instantiate(playerprefabs, playerPos[2].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer4 = Instantiate(playerprefabs, playerPos[3].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer5 = Instantiate(playerprefabs, playerPos[4].transform.position, Quaternion.identity, canvas.transform);
-            
-        }
-        if (tableSize == 6)
-        {
-            GameObject newplayer1 = Instantiate(playerprefabs, playerPos[0].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer2 = Instantiate(playerprefabs, playerPos[1].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer3 = Instantiate(playerprefabs, playerPos[2].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer4 = Instantiate(playerprefabs, playerPos[3].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer5 = Instantiate(playerprefabs, playerPos[4].transform.position, Quaternion.identity, canvas.transform);
-            GameObject newplayer6 = Instantiate(playerprefabs, playerPos[5].transform.position, Quaternion.identity, canvas.transform);
-            
-        }
-        
     }
 
     void GetAllChildObjects(Transform parent)
@@ -123,7 +117,7 @@ public class GameManager : MonoBehaviour
                 Debug.LogWarning("CardDisplay component not found on the cardPrefab.");
             }
         }
-        
-        
     }
+    
+    
 }
