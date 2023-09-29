@@ -19,6 +19,62 @@ public class Player : MonoBehaviour
     public string userName;
 
     
+    public HandRank EvaluateHand()
+    {
+        if (IsTrail())
+            return HandRank.Trail;
+
+        if (IsPureSequence())
+            return HandRank.PureSequence;
+
+        if (IsSequence())
+            return HandRank.Sequence;
+
+        if (IsColor())
+            return HandRank.Color;
+
+        if (IsPair())
+            return HandRank.Pair;
+
+        return HandRank.HighCard;
+    }
+    
+
+    private bool IsTrail()
+    {
+        return hand.TrueForAll(card => card.rank == hand[0].rank);
+    }
+
+    private bool IsPureSequence()
+    {
+        return IsSequence() && IsColor();
+    }
+
+    private bool IsSequence()
+    {
+        var sortedRanks = hand.ConvertAll(card => (int)card.rank);
+        sortedRanks.Sort();
+        return sortedRanks[2] - sortedRanks[1] == 1 && sortedRanks[1] - sortedRanks[0] == 1;
+    }
+
+    private bool IsColor()
+    {
+        return hand.TrueForAll(card => card.suit == hand[0].suit);
+    }
+
+    private bool IsPair()
+    {
+        var cardRanks = new HashSet<CardRank>();
+        foreach (var card in hand)
+        {
+            if (cardRanks.Contains(card.rank))
+                return true;
+
+            cardRanks.Add(card.rank);
+        }
+        return false;
+    } 
+    
 
     // Add a card to the player's hand and instantiate it visually.
     public void AddCardToHand(Card card)

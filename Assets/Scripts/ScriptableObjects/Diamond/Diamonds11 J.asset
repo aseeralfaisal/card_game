@@ -16,3 +16,4 @@ MonoBehaviour:
   cardValue: 11
   cardImage: {fileID: 966858548, guid: 62863de8fae47df4eadce3b755692c94, type: 3}
   suit: 1
+  rank: 11

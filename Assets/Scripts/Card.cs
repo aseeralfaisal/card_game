@@ -19,4 +19,5 @@ public class Card : ScriptableObject
     public int cardValue;
     public Sprite cardImage;
     public CardSuit suit;
+    public CardRank rank;
 }
