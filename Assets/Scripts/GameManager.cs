@@ -14,19 +14,18 @@ public class GameManager : MonoBehaviour
     //player size
     public int tableSize;
     public GameObject[] playerPos;
+    public GameObject[] players;
 
     void Start()
     {
         deck.InitializeDeck(cardDatabase);
-        spawnPlayer();
-        //GetAllChildObjects(playerprefabs.transform);
-        //DrawCard();
+        SpawnPlayer();
     }
 
-    void spawnPlayer()
+    void SpawnPlayer()
     {
         // Instantiate player GameObjects based on tableSize
-        GameObject[] players = new GameObject[tableSize];
+        players = new GameObject[tableSize];
         for (int i = 0; i < tableSize; i++)
         {
             players[i] = Instantiate(playerprefabs, playerPos[i].transform.position, Quaternion.identity,
@@ -62,62 +61,24 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-    }
 
-    void GetAllChildObjects(Transform parent)
-    {
-        // Iterate through each child of the parent transform.
-        foreach (Transform child in parent)
+        for (int i = 0; i < tableSize; i++)
         {
-            // Add the child GameObject to the list.
-            cardSlot.Add(child.gameObject);
+            string theRank= players[i].GetComponent<Player>().DetermineHandType();
+            Debug.Log("The Rank of player" + i + " is "+ theRank);
             
-            // Recursively call the function for this child to check its children.
-            GetAllChildObjects(child);
         }
+        
     }
+    
 
-    public void decideIndex()
-    {
-        //GetAllChildObjects();
-    }
 
-    public void DrawCard()
-    {
-        // Example: Drawing and spawning the first 5 cards from the deck
-        for (int i = 0; i < 3; i++)
-        {
-            Card drawnCard = deck.DrawCard();
-            if (drawnCard != null)
-            {
-                Debug.Log("Drawn Card: " + drawnCard.cardName);
-                SpawnCard(drawnCard);
-            }
-            else
-            {
-                Debug.Log("No more cards in the deck.");
-            }
-        }
-    }
 
-    void SpawnCard(Card card)
-    {
-        int i;
-        for (i = 0; i < 3; i++)
-        {
-            GameObject newCard = Instantiate(cardPrefab, cardSlot[i].transform.position, Quaternion.identity, canvas.transform);
-            CardDisplay cardDisplay = newCard.GetComponent<CardDisplay>();
 
-            if (cardDisplay != null)
-            {
-                cardDisplay.SetCard(card);
-            }
-            else
-            {
-                Debug.LogWarning("CardDisplay component not found on the cardPrefab.");
-            }
-        }
-    }
+
+    
+
+    
     
     
 }
